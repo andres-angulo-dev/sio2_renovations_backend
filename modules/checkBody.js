@@ -8,6 +8,6 @@ const checkBody = (body, keys) => {
     }
     
     return isValid;
-}
+};
 
-module.export = { checkBody };
+module.exports = { checkBody };
