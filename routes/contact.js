@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const { handleProfessionalContactForm } = require('../controllers/professionalContact');
+const { handlePartnerContactForm } = require('../controllers/partnerContactController');
+const { handleCustomerContactForm } = require('../controllers/customerContactController');
 
-router.post('/send_email', handleProfessionalContactForm);
+router.post('/send_partner_email', handlePartnerContactForm);
+
+router.post('/send_customer_email', handleCustomerContactForm);
 
 module.exports = router;
