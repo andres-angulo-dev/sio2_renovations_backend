@@ -38,7 +38,7 @@ async function sendAcknowledgmentEmail({lastName, firstName, email, company, pho
               <td width="20%" style="background-color:#f39220; height:60px;"></td> <!-- box n°1 -->
               
               <td width="60%" style="background-color:#f39220; height:60px;">
-                <img src="https://raw.githubusercontent.com/andres-angulo-dev/sio2_renovations_frontend/refs/heads/main/web/icons/cover.png" alt="Logo" style="width:50px; vertical-align:middle;" />
+                <img src="https://raw.githubusercontent.com/andres-angulo-dev/sio2_renovations_backend/refs/heads/main/public/images/white.png" alt="Logo" style="width:50px; vertical-align:middle;" />
               </td> <!-- box n°2 -->
 
               <td width="20%" style="background-color:#f39220; height:60px;"></td> <!-- box n°3 -->
