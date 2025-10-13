@@ -1,11 +1,11 @@
-const moment = require('moment');
+const moment = require('moment-timezone');
 require('moment/locale/fr');
 
 moment.locale('fr');
 
 // Acknowledgment of receipt to the customer
 function buildCustomerTemplate({lastName, firstName, email, company, phone, requestType, typeWork, startDate, address, message}) {
-  const formattedDate = moment().format('D MMMM YYYY [à] HH:mm');
+  const formattedDate = moment.tz('Europe/Paris').format('D MMMM YYYY [à] HH:mm');
 
   return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; table-layout:fixed;">

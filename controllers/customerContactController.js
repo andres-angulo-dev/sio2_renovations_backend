@@ -10,7 +10,7 @@ exports.handleCustomerContactForm = async (req, res) => {
     const { lastName, firstName, email, company, phone, message, requestType, typeWork, startDate, address } = req.body;
 
     const patternMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const emailCheck =  patternMail.test(email);
+    const emailCheck = patternMail.test(email);
 
     if (emailCheck) {
         try {
