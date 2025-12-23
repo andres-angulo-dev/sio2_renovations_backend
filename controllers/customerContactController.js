@@ -4,6 +4,7 @@ const { checkBody } = require('../modules/checkBody');
 exports.handleCustomerContactForm = async (req, res) => {
     if (!checkBody(req.body, ['lastName', 'email', 'message', 'requestType'])) {
         res.json({ result: false, error: 'Missing or empty fields'});
+        print('[Backend]: CustomerContactController : T ICI');
         return;
     }
 
@@ -12,7 +13,7 @@ exports.handleCustomerContactForm = async (req, res) => {
       filename: file.originalname,
       content: file.buffer.toString('base64'),
       encoding: 'base64',
-      contenType: file.mimeType
+      contentType: file.mimetype
     })) || [];
 
     const patternMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
