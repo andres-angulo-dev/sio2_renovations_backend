@@ -1,4 +1,4 @@
-const tranporter = require('../config/emailConfig');
+const transporter = require('../config/emailConfig');
 const { buildPartnerTemplate } = require('../services/templates/partnerTemplate');
 const { buildCustomerTemplate } = require('../services/templates/customerTemplate');
 
@@ -18,15 +18,17 @@ async function sendPartnerContactEmail(data) {
     `
   };
   
-  return tranporter.sendMail(mailOptions);
+  return transporter.sendMail(mailOptions);
 };
 
 // Sending the customer form to your own mailbox
 async function sendCustomerContactEmail(data) {
+ 
   const mailOptions = {
     from: `"${data.lastName}" <${data.email}>`,
     to: process.env.MAIL,
     subject: `CUSTOMER FORM - New contact message by ${data.lastName} : ${data.requestType}`,
+    attachments: data.files || [],
     text: `
       LastName: ${data.lastName}
       FirstName: ${data.firstName}
@@ -39,10 +41,10 @@ async function sendCustomerContactEmail(data) {
       localisation: ${data.address}
 
       ${data.message}
-    `
+    `,
   };
   
-  return tranporter.sendMail(mailOptions);
+  return transporter.sendMail(mailOptions);
 }
 
 // Acknowledgment of receipt to the customer
@@ -53,10 +55,11 @@ async function sendAcknowledgmentEmail(data) {
     from: `"${process.env.COMPANY}" <${process.env.MAIL}>`,
     to: data.email,
     subject: `Accusé de réception automatique`,
+    attachments: data.files || [],
     html: html
   }
 
-   return tranporter.sendMail(mailOptions);
+   return transporter.sendMail(mailOptions);
 }
 
 module.exports = { sendPartnerContactEmail, sendCustomerContactEmail, sendAcknowledgmentEmail };

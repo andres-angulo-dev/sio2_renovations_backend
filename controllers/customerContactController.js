@@ -8,16 +8,22 @@ exports.handleCustomerContactForm = async (req, res) => {
     }
 
     const { lastName, firstName, email, company, phone, message, requestType, typeWork, startDate, address } = req.body;
+    const files = req.files?.map(file => ({
+      filename: file.originalname,
+      content: file.buffer.toString('base64'),
+      encoding: 'base64',
+      contenType: file.mimeType
+    })) || [];
 
     const patternMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const emailCheck = patternMail.test(email);
 
     if (emailCheck) {
         try {
-            await sendCustomerContactEmail({ lastName, firstName, email, company, phone, message, requestType, typeWork, startDate, address });
+            await sendCustomerContactEmail({ lastName, firstName, email, company, phone, message, requestType, typeWork, startDate, address, files });
 
             try {
-                await sendAcknowledgmentEmail({ lastName, firstName, email, requestType, typeWork, startDate, address, message })
+                await sendAcknowledgmentEmail({ lastName, firstName, email, requestType, typeWork, startDate, address, message, files })
             } catch(error) {
                 console.warn('Acknowledgment email was not sent: ', error.message);
             }
