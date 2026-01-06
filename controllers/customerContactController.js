@@ -2,8 +2,6 @@ const { sendCustomerContactEmail, sendAcknowledgmentEmail } = require('../servic
 const { checkBody } = require('../modules/checkBody');
 
 exports.handleCustomerContactForm = async (req, res) => {
-    console.log('[handleCustomerContactForm] Controller reached');
-
     if (!checkBody(req.body, ['lastName', 'email', 'message', 'requestType'])) {
         res.json({ result: false, error: 'Missing or empty fields'});
         return;

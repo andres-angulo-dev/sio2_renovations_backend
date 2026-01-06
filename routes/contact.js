@@ -1,22 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var upload = multer();
+var upload = multer({
+    storage, 
+    limits: {
+        fileSize: 4.5 * (1024*1024) // File size limit 4.5MB
+    }
+});
 const { handlePartnerContactForm } = require('../controllers/partnerContactController');
 const { handleCustomerContactForm } = require('../controllers/customerContactController');
 
 router.post('/send_partner_email', handlePartnerContactForm);
 
-// router.post('/send_customer_email', upload.array('files'), handleCustomerContactForm);
-
-router.post('/send_customer_email', upload.array('files'), (req, res, next) => {
-  console.log('--- /contact/send_customer_email ---');
-  console.log('Time:', new Date().toISOString());
-  console.log('Headers:', req.headers);
-  console.log('Body keys:', Object.keys(req.body || {}));
-  console.log('Files count:', req.files ? req.files.length : 0);
-
-  return handleCustomerContactForm(req, res, next);
-});
+router.post('/send_customer_email', (req, res, next) => {
+    upload.array('files')(req, res, function(err) {
+        if (err instanceof multer.MulterError) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).json({result: false, error: 'Error: maximum file size exceeded'})
+            }
+        }
+        next(err)
+    });
+}, handleCustomerContactForm);
 
 module.exports = router;
